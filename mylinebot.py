@@ -21,7 +21,7 @@ from linebot.models import (
 )
 from urllib.parse import parse_qsl
 
-connNgrok()
+
 
 app = Flask(__name__)
 
@@ -30,7 +30,7 @@ CHANNEL_ACCESS_TOKEN = "dRkGyKcQ18qxOJtyvLiyQGC/0YN2PY3sSCOzFOEDmuazFk+WZ+Nk1Ofy
 
 line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(CHANNEL_SECRET)
-
+line_bot_api.push_message("U2753d6c06c557ace8c2fc8b1e2808d4b", TextSendMessage(text='testlineBOT 來溜'))
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -285,7 +285,14 @@ def sendImgCarousel(event):
 
 
 
-if __name__ == "__main__":
-    app.run()
+# if __name__ == "__main__":
+#     app.run()
+
 
 # 每次run完要去要去line Developers 更新 Webhook URL (ngrok tunnel) ＋/callback
+
+#主程式
+import os
+if __name__ == "__main__":
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
