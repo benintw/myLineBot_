@@ -64,9 +64,9 @@ def handle_message(event):
     mtext = event.message.text
     
     # Testing 傳送文字
-    if mtext == '@傳送文字' or "傳送文字":
+    if mtext == '@傳送文字':
         try:
-            message = TextSendMessage(text = "這是測試文字")
+            message = TextSendMessage(text = "這是測試文字08-11-3:30")
             line_bot_api.reply_message(event.reply_token,message)
         except:
             line_bot_api.reply_message(event.reply_token,TextSendMessage(
