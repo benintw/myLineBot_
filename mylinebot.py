@@ -64,7 +64,7 @@ def handle_message(event):
     mtext = event.message.text
     
     # Testing 傳送文字
-    if mtext == '@傳送文字':
+    if mtext == '@傳送文字' or "傳送文字":
         try:
             message = TextSendMessage(text = "這是測試文字")
             line_bot_api.reply_message(event.reply_token,message)
@@ -72,7 +72,57 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token,TextSendMessage(
                 text="發生錯誤!"
             ))
-    
+
+    # 傳送位置
+    elif mtext == '@傳送位置':
+        try:
+            message = LocationSendMessage(
+                title = "團練 Fitopia",
+                address = "235新北市中和區景平路690號",
+                # 25.00175241122356, 121.49698463408848
+                latitude = 25.00175241122356, # 緯度
+                longitude = 121.49698463408848 # 精度
+            )
+            
+            line_bot_api.reply_message(event.reply_token,message)
+        except:
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(
+                text="發生錯誤!"
+            ))
+
+    # 快速選單
+    if mtext == '@快速選單':
+        try:
+            message = TextSendMessage(
+                text = '請選擇想聯絡的教練',
+                quick_reply = QuickReply(
+                    items = [
+                        QuickReplyButton(
+                            action = MessageAction(label='黑悟空', text="Zat")
+                        ),
+                        QuickReplyButton(
+                            action = MessageAction(label="奇諾", text = "Kino")
+                        ),
+                        QuickReplyButton(
+                            action = MessageAction(label='五股王陽明', text = "Vincent")
+                        ),
+                        QuickReplyButton(
+                            action = MessageAction(label='勇迷', text="Jason")
+                        ),
+                        QuickReplyButton(
+                            action = MessageAction(label='志偉', text='志偉')
+                        )
+                    ]
+                )
+            )
+            line_bot_api.reply_message(event.reply_token,message)
+        except:
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(
+                text="發生錯誤!"
+            ))
+
+
+
     # 
     if mtext == "@按鈕樣板":
         sendButton(event)
@@ -146,7 +196,7 @@ def sendButton(event): # 按鈕樣板
                     ),
                     PostbackTemplateAction( # 執行postback 功能, 觸發postback事件
                         label = '回傳訊息', #按鈕文字
-                        text = "這是text ", # 如果不需要使用者看到回傳的文字訊息,這邊可以省去text
+                        text = "這段text可以省略掉 ", # 如果不需要使用者看到回傳的文字訊息,這邊可以省去text
                         data = 'action=buy'
                     ),
                 ]
@@ -176,7 +226,7 @@ def sendConfirm(event):
                 text = '確認你要買這個嗎?',
                 actions = [
                     MessageTemplateAction(
-                        label = '幹, 對啦',
+                        label = '對啦',
                         text = "@yes"
                     ),
                     MessageTemplateAction(
@@ -195,7 +245,7 @@ def sendConfirm(event):
 def sendYes(event):
     try:
         message = TextSendMessage(
-            text = '感謝您的購買,\n我們會盡快寄出商品. 幹你ㄇ '
+            text = '感謝您的購買,\n我們會盡快寄出商品. '
         )
         line_bot_api.reply_message(event.reply_token, message)
     except:
