@@ -1,6 +1,7 @@
 
 
 from flask import Flask, request, abort
+import streamlit as st
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -22,11 +23,10 @@ from linebot.models import (
 from urllib.parse import parse_qsl
 
 
-
 app = Flask(__name__)
 
-CHANNEL_SECRET = st.secret["CHANNEL_SECRET"]
-CHANNEL_ACCESS_TOKEN = st.secret['CHANNEL_ACCESS_TOKEN']
+CHANNEL_SECRET = st.secrets["CHANNEL_SECRET"]
+CHANNEL_ACCESS_TOKEN = st.secrets['CHANNEL_ACCESS_TOKEN']
 
 line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(CHANNEL_SECRET)
